@@ -1,5 +1,4 @@
 .env
 .python-version
 .vscode
-src/data
 **/__pycache__/

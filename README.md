@@ -1,0 +1,70 @@
+<h1><p align="center"><b>AmicusDei – Assistente Teológico Católico (RAG Chatbot)</b></p></h1>
+
+<p align="center">
+<a href="https://catholic-catechism-rag-api.aight.com.br/"><img src="src/img/amicusdei_capa.svg" alt="capa do AmicusDei"></a>
+</p>
+
+> **Status**: *Em desenvolvimento* ⚙️
+
+<h2 align="center"><p><a href="https://catholic-catechism-rag-api.aight.com.br/"><u>Clique aqui para usar o AmicusDei!</u></a></p></h2>
+
+<div style="margin: 40px;"></div>
+
+# Objetivos do Projeto
+
+O **AmicusDei** nasceu de uma vontade simples: usar o meu conehcimento em **Engenharia de IA** para ajudar quem quer entender melhor a fé católica. A ideia é dar um espaço acolhedor para quem está chegando ou retornando à Igreja, com respostas baseadas no **Catecismo da Igreja Católica (CIC)** e disponíveis a qualquer hora.
+
+A partir desse propósito, o projeto também virou um laboratório onde aplico LLMs, RAG e boas práticas de arquitetura. O Streamlit funciona como a “porta de entrada” do chat, a API RAG traz os parágrafos oficiais do Catecismo, e a OpenAI monta a resposta final em tempo real, mantendo tudo fiel, claro e acessível para qualquer pessoa.
+
+<div style="margin: 20px;"></div>
+
+# Arquitetura e Fluxo do Assistente
+
+1) **Validação ética do questionamento**  
+   - Cada pergunta passa por moderação automática (modelo `omni-moderation-latest`) e por um prompt estruturado da OpenAI que classifica escopo, categoria e ação recomendada.  
+   - Perguntas fora do contexto catequético são bloqueadas com mensagens pastorais amigáveis.
+
+2) **RAG com o Catecismo**  
+   - As perguntas válidas consultam a [API RAG do Catecismo da Igreja Católica](https://catholic-catechism-rag-api.aight.com.br/) que devolve os 3 parágrafos mais similares, com pontuação de similaridade e localização atual dentro da estrutura do Catecismo.
+
+3) **Geração de respostas streaming**  
+   - Quando os parágrafos são úteis, eles alimentam o prompt do modelo `gpt-5-mini`.  
+   - O retorno usa streaming para garantir baixa latência e permitir UX fluida no chat.
+
+4) **Orquestração do front-end**  
+   - O Streamlit controla estado de conversa (até 3 interações), expõe descrições auxiliares, registra histórico e trata erros de domínio/servidor para manter o usuário informado.
+
+<div style="margin: 20px;"></div>
+
+
+# Estrutura de Pastas do Projeto
+
+```
+catholic-catechism-rag-chatbot/
+├── chatbot.py                         # Camada de apresentação (Streamlit)
+├── src/
+│   ├── config/logger_config.py        # Configuração de logs
+│   ├── data/
+│   │   ├── chatbot_descriptions/      # Descrições para a UI 
+│   │   └── prompt/                    # Instruções do modelo
+│   ├── domain/
+│   │   ├── services/query_validator.py
+│   │   └── use_cases/CatholicCatechismChatBot.py
+│   ├── errors/                        # Exceções de domínio/servidor
+│   ├── infra/openai_api/              # Abstrações de consumo da OpenAI
+│   └── validators/models/             # Modelos Pydantic utilizados
+├── src/img/amicusdei_capa.svg         # Arte utilizada no README e na UI
+└── LICENSE                            # MIT License
+```
+
+<div style="margin: 20px;"></div>
+
+
+# Referências
+CATECISMO DA IGREJA CATÓLICA. Edição típica vaticana. Disponível em: https://www.vatican.va/archive/cathechism_po/index_new/prima-pagina-cic_po.html
+
+OPENAI. Documentation. Disponível em: https://platform.openai.com/docs/. 
+
+STREAMLIT. Documentation. Disponível em: https://docs.streamlit.io/.
+
+<hr></hr> <div style="margin: 20px;"></div> <p align="center">Para acompanhar evoluções do projeto, siga as atualizações neste repositório.</p> <p align="center">Que Deus te abençoe! 🙏</p>

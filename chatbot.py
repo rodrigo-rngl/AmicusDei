@@ -41,7 +41,7 @@ def initialize_sessions_states() -> None:
 
     if "chatbot_service" not in st.session_state:
         st.session_state.chatbot_service = CatholicCatechismChatBot(
-            prompt_id=str(os.getenv("PROMPT_CHATBOT_ID")))
+            prompt_id=str(st.secrets["PROMPT_CHATBOT_ID"]))
 
     if "conversation_chat" not in st.session_state:
         st.session_state.conversation_chat = st.empty()

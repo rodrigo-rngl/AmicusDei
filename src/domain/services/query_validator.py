@@ -1,4 +1,4 @@
-import os
+import streamlit as st
 from src.errors.types.domain_error import DomainError
 from src.validators.models.QueryValidation import QueryValidation
 from src.infra.openai_api.openai_response_creator import OpenAIResponseCreator
@@ -10,7 +10,7 @@ logger = setup_logger(name="OpenAIAPIConnectionHandler")
 
 class QueryValidator:
     def __init__(self) -> None:
-        self.prompt_id = str(os.getenv('PROMPT_QUERY_VALIDATION_ID'))
+        self.prompt_id = str(st.secrets["PROMPT_QUERY_VALIDATION_ID"])
 
     async def validate(self, query: str) -> QueryValidation:
         if await self.is_inappropriate_query(query=query):

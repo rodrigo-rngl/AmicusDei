@@ -1,4 +1,4 @@
-.env
 .python-version
 .vscode
+.streamlit
 **/__pycache__/

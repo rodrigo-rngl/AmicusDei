@@ -1,4 +1,4 @@
-import os
+import streamlit as st
 from openai import AsyncOpenAI
 
 from src.config.logger_config import setup_logger
@@ -7,7 +7,7 @@ logger = setup_logger(name="OpenAIAPIConnectionHandler")
 
 class OpenAIAPIConnectionHandler:
     def __init__(self) -> None:
-        self.__api_key = os.getenv("OPENAI_API_KEY")
+        self.__api_key = str(st.secrets["OPENAI_API_KEY"])
 
         self.client = self.__create_api_client()
 

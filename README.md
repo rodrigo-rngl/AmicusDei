@@ -1,28 +1,28 @@
 <h1><p align="center"><b>AmicusDei – Assistente Teológico Católico (RAG Chatbot)</b></p></h1>
 
 <p align="center">
-<a href="https://catholic-catechism-rag-api.aight.com.br/"><img src="src/img/amicusdei_capa.svg" alt="capa do AmicusDei"></a>
+<a href="https://amicusdei.streamlit.app/"><img src="src/img/amicusdei.svg" alt="capa do AmicusDei"></a>
 </p>
 
 > **Status**: *Em desenvolvimento* ⚙️
 
-<h2 align="center"><p><a href="https://catholic-catechism-rag-api.aight.com.br/"><u>Clique aqui para usar o AmicusDei!</u></a></p></h2>
+<h2 align="center"><p><a href="https://amicusdei.streamlit.app/"><u>Clique aqui para usar o AmicusDei!</u></a></p></h2>
 
 <div style="margin: 40px;"></div>
 
 # Objetivos do Projeto
 
-O **AmicusDei** nasceu de uma vontade simples: usar o meu conehcimento em **Engenharia de IA** para ajudar quem quer entender melhor a fé católica. A ideia é dar um espaço acolhedor para quem está chegando ou retornando à Igreja, com respostas baseadas no **Catecismo da Igreja Católica (CIC)** e disponíveis a qualquer hora.
+O **AmicusDei** nasceu para mostrar, na prática, como a [**API RAG do Catecismo da Igreja Católica**](https://catholic-catechism-rag-api.aight.com.br/) pode servir de base para aplicações digitais que aproximam as pessoas da fé. Ele oferece um espaço acolhedor para quem está chegando ou retornando à Igreja, com respostas ancoradas no Catecismo da Igreja Católica (CIC) e disponíveis a qualquer hora.
 
-A partir desse propósito, o projeto também virou um laboratório onde aplico LLMs, RAG e boas práticas de arquitetura. O Streamlit funciona como a “porta de entrada” do chat, a API RAG traz os parágrafos oficiais do Catecismo, e a OpenAI monta a resposta final em tempo real, mantendo tudo fiel, claro e acessível para qualquer pessoa.
+A partir desse propósito, o projeto também virou um laboratório onde aplico LLMs, RAG e boas práticas de arquitetura. O Streamlit funciona como a porta de entrada do chat, a API RAG entrega os parágrafos oficiais do Catecismo, e a OpenAI monta a resposta final em tempo real, garantindo fidelidade doutrinária e acessibilidade para qualquer pessoa.
 
 <div style="margin: 20px;"></div>
 
 # Arquitetura e Fluxo do Assistente
 
 1) **Validação ética do questionamento**  
-   - Cada pergunta passa por moderação automática (modelo `omni-moderation-latest`) e por um prompt estruturado da OpenAI que classifica escopo, categoria e ação recomendada.  
-   - Perguntas fora do contexto catequético são bloqueadas com mensagens pastorais amigáveis.
+   - Na primeira interação, a pergunta é enviada à API RAG, que já valida tamanho, clareza e escopo catequético antes de devolver qualquer referência.
+   - Nas mensagens seguintes, o QueryValidator local reavalia a adequação do que o usuário envia, bloqueando conteúdos impróprios ou fora de contexto.
 
 2) **RAG com o Catecismo**  
    - As perguntas válidas consultam a [API RAG do Catecismo da Igreja Católica](https://catholic-catechism-rag-api.aight.com.br/) que devolve os 3 parágrafos mais similares, com pontuação de similaridade e localização atual dentro da estrutura do Catecismo.

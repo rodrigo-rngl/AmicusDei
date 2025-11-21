@@ -152,7 +152,7 @@ async def main() -> None:
 
     write_how_to_work_description()
 
-    st.sidebar.image('src/img/amicusdei_capa.svg')
+    st.sidebar.image('src/img/amicusdei.svg')
     with st.sidebar.expander("💡 **Sobre este projeto!**", expanded=True):
         write_about_description()
     st.sidebar.caption(
